@@ -1,35 +1,38 @@
-#ifndef tab_HPP
-#define tab_HPP
+#ifndef Array_HPP
+#define Array_HPP
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
-// #include "../inc/base.hpp"
 using namespace std;
+#include "interfaces/iRunable.hpp"
+#include "interfaces/iQuick_sort.hpp"
 
  	
-class tab 
+class Array :public iRunable, public iQuick_sort
 {
 	int length;       
-	int * tablica;  
+	int * array;  
 	int amor;          
 	//amor wolne miejsce w tablicy
 public:
-	int & operator[](int element) {return tablica[element];}
+	void run(char option){};
+	double run_with_time(char option){return 0;};
+	int & operator[](int element) {return array[element];}
 	
-	tab(){
+	Array(){
 		length=1;
 		amor=1;
-		tablica = new int [1];
+		array = new int [1];
 	}
 // 
-	tab(int x){
+	Array(int x){
 		length=x;
 		amor =x;
-		tablica = new  int [length];
+		array = new  int [length];
 	}
 //
-	~tab(){
-		delete [] tablica;
+	~Array(){
+		delete [] array;
 	} 
 
 // Gety
@@ -45,17 +48,17 @@ public:
 		for (int i=0; i<length; i++){
 			cout << "podaj element nr " << i+1 << ": ";
 			cin >> tmp;
-			tablica[i]=tmp;
+			array[i]=tmp;
 		}
 		amor=0;
 	}
 //
 	void add(int place, int value){
 		if(place<0 && place>=length){
-			cout<< "Odwolujesz sie do miejsca przed/za tablica, to nie pyton ;)\n";
+			cout<< "Odwolujesz sie do miejsca przed/za array, to nie pyton ;)\n";
 		} 
 		else{
-			tablica[place]=value;
+			array[place]=value;
 			if(((length-1)-place)<amor){ //sprawdzasz czy dodajac element nie zmniejszy sie odleglosc ostatniego elementu od konca tablicy i ewentualnie zmieniasz wartosc amortyzacji
 				amor=(length-1)-place;
 			}
@@ -65,14 +68,14 @@ public:
 // metody
 	void fill_rand(int range){
 		for (int i=0; i<length; i++){
-			tablica[i]=rand() % range;
+			array[i]=rand() % range;
 		}
 		amor=0;
 	}
 // 
-	void output()const{
+	void output(){
 		for(int i=0; i<length; i++){
-			cout << fixed << setprecision(2) << tablica[i]<<" ";
+			cout << fixed << setprecision(2) << array[i]<<" ";
 		}
 		cout << "thats all" << endl;
 	}
@@ -80,10 +83,10 @@ public:
 	void enlarge(unsigned int new_length){
 		int * tmp = new int [new_length];
 		for (int i=0; i<length; i++){
-			tmp[i]=tablica[i];
+			tmp[i]=array[i];
 		}
-		delete [] tablica;
-		tablica=tmp;
+		delete [] array;
+		array=tmp;
 		amor=new_length-(length-amor);
 		length=new_length;
 	}
@@ -92,53 +95,56 @@ public:
 		double x;
 		x=0;
 		for(int i=0; i<length; i++){
-			x=x+tablica[i];
+			x=x+array[i];
 		}
 		return x/length;
 	}
 // 
 	void change_place(int a, int b){
 		int first;
-		first=tablica[a];
-		tablica[a]=tablica[b];
-		tablica[b]=first;
+		first=array[a];
+		array[a]=array[b];
+		array[b]=first;
 	}
 //
-	void equals(tab t){
-	if(t.get_length()==length){
-		for(int i=0; i<length; i++){
-			tablica[i]=t[i];
+	void equals(Array t){
+		if(t.get_length()==length){
+			for(int i=0; i<length; i++){
+				array[i]=t[i];
+			}
 		}
-	}
-	else{
-		enlarge(t.get_length());
-		for(int i=0; i<length;i++){
-		tablica[i]=t[i];	
-		}
-	}
-	
-	}
-//
-		
-	void fill(char option){
-		
-		if(option=='r'){
+		else{
+			enlarge(t.get_length());
 			for(int i=0; i<length;i++){
-				tablica[i]=i+1;
+			array[i]=t[i];	
+			}
+		}	
+	}
+//
+		
+	void prepare(char prepare_option){
+		
+		if(prepare_option=='r'){
+			for(int i=0; i<length;i++){
+				array[i]=i+1;
 			}
 		}
 
-		if(option=='m'){
+		if(prepare_option=='m'){
 			for(int i=0; i<length; i++){
-				tablica[i]=length-i;
+				array[i]=length-i;
 			}
 		}
 		
-		if(option=='l'){
+		if(prepare_option=='l'){
 			fill_rand(100);
 		}
 	
 	}
 //
+	void info(){
+		cout << "Struktura danych: tablica\n\tRozmiar: " << length << endl;
+	}
+
 };
 #endif
