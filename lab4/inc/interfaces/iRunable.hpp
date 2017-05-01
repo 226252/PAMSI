@@ -14,7 +14,8 @@ public:
 	//
 	virtual void info()=0;
 	//
-	virtual void prepare(char prepare_option)=0;
+	virtual void prepare(int prepare_quantity, char prepare_option)=0;
 	virtual void output()=0;
+	virtual void reset()=0;
 };
 #endif

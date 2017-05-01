@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++11 -Wall -pedantic
+CXXFLAGS=-std=c++11 -Wall -pedantic -g
 BIN=program
 COMMAND=10
 
@@ -17,6 +17,7 @@ clean:
 	rm -f inc/*.o 
 	rm -f *.o 
 	rm -f $(BIN) 
+	rm -f measures
 	
 run:    ${BIN}
 	./${BIN} ${COMMAND}

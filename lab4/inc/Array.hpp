@@ -6,44 +6,81 @@
 using namespace std;
 #include "interfaces/iRunable.hpp"
 #include "interfaces/iQuick_sort.hpp"
-
  	
 class Array :public iRunable, public iQuick_sort
 {
 	int length;       
-	int * array;  
+	double * array;  
 	int amor;          
 	//amor wolne miejsce w tablicy
+	void enlarge(int new_length);
+
 public:
-	void run(char option){};
-	double run_with_time(char option){return 0;};
-	int & operator[](int element) {return array[element];}
+
+// Konstruktory i operatory
+	Array();
+	Array(int x);
+	~Array();
+	double & operator[](int element);
+// Gety
+	int get_length()const;
+	int get_amor()const;
+// metody
+	void input();
+	void add(int place, int value);
+	void fill_rand(int range);
+	void output();
+	double mean()const;
+	void change_place(int a, int b);
+	void equals(Array &t);
+	void prepare(int prepare_quantity, char prepare_option);
+	void info();
+	void reset();
+// potrzebne by dzialalo dzidziczenie z iRun
+	void run(char option){ cout<<"good luck with running a data structure :-D\n";};
 	
-	Array(){
+	double run_with_time(char option){
+		cout<<"Structure runs so fast that It will return you 0 :-D\n";
+		return 0;
+	};
+
+
+
+};
+
+	Array::Array(){
 		length=1;
 		amor=1;
-		array = new int [1];
+		array = new double [1];
 	}
 // 
-	Array(int x){
+	Array::Array(int x){
 		length=x;
 		amor =x;
-		array = new  int [length];
+		array = new  double [length];
 	}
 //
-	~Array(){
+	Array::~Array(){
 		delete [] array;
 	} 
-
+//
+	double& Array::operator [](int element){
+		if(element<length){
+			return array[element];
+		}else{
+			cout<<"Próba wyjścia poza zakres, zwracam 1 element\n";
+			return array[0];
+		}
+	}
 // Gety
-	int get_length()const{
+	int Array::get_length()const{
 		return length;
 	}
 //
-	int get_amor()const{
+	int Array::get_amor()const{
 		return amor;
 	}
-	void input(){
+	void Array::input(){
 		int tmp;
 		for (int i=0; i<length; i++){
 			cout << "podaj element nr " << i+1 << ": ";
@@ -53,7 +90,7 @@ public:
 		amor=0;
 	}
 //
-	void add(int place, int value){
+	void Array::add(int place, int value){
 		if(place<0 && place>=length){
 			cout<< "Odwolujesz sie do miejsca przed/za array, to nie pyton ;)\n";
 		} 
@@ -66,32 +103,43 @@ public:
 
 	}
 // metody
-	void fill_rand(int range){
+	void Array::fill_rand(int range){
 		for (int i=0; i<length; i++){
 			array[i]=rand() % range;
 		}
 		amor=0;
 	}
 // 
-	void output(){
+	void Array::output(){
 		for(int i=0; i<length; i++){
 			cout << fixed << setprecision(2) << array[i]<<" ";
 		}
 		cout << "thats all" << endl;
 	}
 // 
-	void enlarge(unsigned int new_length){
-		int * tmp = new int [new_length];
-		for (int i=0; i<length; i++){
-			tmp[i]=array[i];
+	void Array::enlarge(int new_length){
+		if (new_length==length){
+			cout<<"Atempting to enlarge to the same size, operation aborted\n";	
 		}
-		delete [] array;
-		array=tmp;
-		amor=new_length-(length-amor);
-		length=new_length;
+
+		if (new_length<length){
+			cout<<"Atempting to enlarge to smaller size, operation aborted\n";	
+		}
+		
+		if(new_length>length){
+			double * tmp = new double [new_length];
+			for (int i=0; i<length; i++){
+				tmp[i]=array[i];
+			}
+			delete [] array;
+			array=tmp;
+			amor=new_length-(length-amor);
+			length=new_length;
+		}
+
 	}
 // 
-	double mean()const{
+	double Array::mean()const{
 		double x;
 		x=0;
 		for(int i=0; i<length; i++){
@@ -100,14 +148,14 @@ public:
 		return x/length;
 	}
 // 
-	void change_place(int a, int b){
+	void Array::change_place(int a, int b){
 		int first;
 		first=array[a];
 		array[a]=array[b];
 		array[b]=first;
 	}
 //
-	void equals(Array t){
+	void Array::equals(Array &t){
 		if(t.get_length()==length){
 			for(int i=0; i<length; i++){
 				array[i]=t[i];
@@ -122,8 +170,10 @@ public:
 	}
 //
 		
-	void prepare(char prepare_option){
-		
+	void Array::prepare(int prepare_quantity, char prepare_option){
+		reset();
+		enlarge(prepare_quantity);
+
 		if(prepare_option=='r'){
 			for(int i=0; i<length;i++){
 				array[i]=i+1;
@@ -142,9 +192,15 @@ public:
 	
 	}
 //
-	void info(){
+	void Array::info(){
 		cout << "Struktura danych: tablica\n\tRozmiar: " << length << endl;
 	}
-
-};
+//
+	void Array::reset(){
+		double * tmp = new double [1];
+		delete [] array;
+		array=tmp;
+		amor=1;
+		length=1;
+	}
 #endif

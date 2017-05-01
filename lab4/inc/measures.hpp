@@ -6,24 +6,12 @@ using namespace std;
 #include "timer.hpp"
 #include "algorithms/Quick_sort.hpp"
 #include "interfaces/iRunable.hpp"
+#include <fstream>
 
-//Idea dzialania programu
-//	prosze o przeczytanie i ewentualne wskazanie
-//	bledow w mysleniu
-//funkcja measures zostaje tworzona przy kazdym nowym projekcie
-//	w taki sposob by wykonywac swoja funkcje
-//	w srodku zostaje przygotowana struktura
-//	np. tablica zostaje wypelniona randomowo
-//	tablica wchodzi do obiektu iQuick_sort
-//	oznacza to ze zostanie poddana algorytmowi Qsort
-//	przy wywolaniu run()
-//	nastepnie obiekt iQsort wchodzi do obiektu iRunable
-//	wykonane zostaje run()
-
-
-void measures(iRunable & execute, char prepare_option, char run_option){ 
+double measures(iRunable & execute, int prepare_quantity, char prepare_option, char run_option){ 
 	
 	Array pomiary(5);
+	double result;
 	string what;
 
 	switch(prepare_option){
@@ -42,15 +30,17 @@ void measures(iRunable & execute, char prepare_option, char run_option){
 		}
 		
 	for(int i=0; i<pomiary.get_length(); i++){
-		execute.prepare(prepare_option);
+		execute.prepare(prepare_quantity, prepare_option);
 		// execute.output();
 		pomiary[i]=execute.run_with_time(run_option);
 		// execute.output();					
 	}
 
-	cout<< "Pomiar wykonywany dla: "<< what << endl;
+	cout<< "\nPomiar wykonywany dla: "<< what << endl;
 	execute.info();
-	cout << "czas sortowania: "  << pomiary.mean() << " milisekund" << endl;
-
-}				
+	cout << "czas sortowania: "  << pomiary.mean() << " milisekund\n" << endl;
+	result=pomiary.mean();
+	return result;
+}		
+		
 #endif

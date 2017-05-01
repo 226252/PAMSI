@@ -4,7 +4,7 @@
 using namespace std;
 #include "../timer.hpp"
 #include "../interfaces/iRunable.hpp"
-
+#include "../interfaces/iQuick_sort.hpp"
 
 
 
@@ -19,12 +19,26 @@ class Quick_sort :public iRunable
 	bool afterRun = false;
 	char chosenOption;
 public:
-//		
-	Quick_sort(iQuick_sort &x): 
+//konstruktory
+	Quick_sort(iQuick_sort &x);
+//algorytm Qsort
+	void quick_sort(int first, int last,char what_pivot);
+//to warto wiedziec
+	bool is_sorted();
+//a to z interfejsow
+	void run(char option);
+	double run_with_time(char option);
+	void info();
+	void prepare( int prepare_quantity, char prepare_option);
+	void output();
+	void reset();
+}; 
+
+	Quick_sort::Quick_sort(iQuick_sort &x): 
 		object(x),
 		isObjectLoaded(true){}
 //
-	void quick_sort(int first, int last,char what_pivot){
+	void Quick_sort::quick_sort(int first, int last,char what_pivot){
 		int pivot_place;
 		int pivot;
 		// i,j zmienne sluzace do przechodzenia po tablicy
@@ -61,7 +75,7 @@ public:
 
 	}
 //
-	bool is_sorted(){
+	bool Quick_sort::is_sorted(){
 		for(int i=0; i<(object.get_length()-1);i++){
 			if(object[i]>object[i+1]){
 				return false;
@@ -70,7 +84,7 @@ public:
 		return true;
 	}
 //
-	void run(char option){
+	void Quick_sort::run(char option){
 		if(isObjectLoaded){
 			quick_sort(0, (object.get_length()-1), option);
 		} else {
@@ -83,9 +97,9 @@ public:
 		chosenOption=option;
 	}
 //
-	double run_with_time(char option){
+	double Quick_sort::run_with_time(char option){
 		if(isObjectLoaded){
-			timer<milliseconds> clock;
+			timer<microseconds> clock;
 			clock.begin();
 			run(option);
 			clock.stop();
@@ -97,7 +111,7 @@ public:
 
 	}
 //	
-	void info(){
+	void Quick_sort::info(){
 		cout << "Algorytm Quick_sort" << endl;
 		if(afterRun){
 			cout << "\tWykonany z opcja: " << chosenOption << endl;
@@ -107,12 +121,20 @@ public:
 		}
 		object.info(); 
 	}
-	void prepare(char prepare_option){
-		object.prepare(prepare_option);
+	void Quick_sort::prepare(int prepare_quantity,char prepare_option){
+		object.prepare(prepare_quantity, prepare_option);
 	}
 //
-	void output(){
+	void Quick_sort::output(){
 		object.output();
-	} 
-}; 
+	}
+//
+	void Quick_sort::reset(){
+		if(isObjectLoaded){
+			object.reset();
+		}else{
+			cout<<"nothing to reset\n";
+		}
+	}
+
 #endif
