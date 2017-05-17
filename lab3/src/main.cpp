@@ -71,7 +71,6 @@ int main(int argc, char* argv[]){
 	List l;
 	Stack s;
 	Queue q;
-	cout<<"*argv[1]+1 "<< *argv[1]+1 <<endl;
 	if(obsluga_argumentow(argc, argv)){
 		if(*argv[3]=='l'){
 			measures(atoi(argv[1]), atoi(argv[2]), l);
