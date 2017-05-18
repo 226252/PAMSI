@@ -9,8 +9,8 @@ public:
 	iRunable(){}
 	virtual ~iRunable(){}
 	//
-	virtual void run(char option)=0;
-	virtual double run_with_time(char option)=0;
+	virtual void run(char option=' ')=0;
+	virtual double run_with_time(char option=' ')=0;
 	//
 	virtual void info()=0;
 	//

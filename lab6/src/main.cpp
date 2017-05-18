@@ -8,9 +8,9 @@ using namespace std;
 #include <string>
 
 int main(){	
-	Map m;
+	Map m(20);
 	string s;
-	for(int i=0;i<10;i++){
+	for(int i=0;i<m.get_size();i++){
 		cout<<"podej suowo xD: ";
 		cin>>s;
 		m.insert(s);

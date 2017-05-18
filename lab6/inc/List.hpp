@@ -86,11 +86,21 @@ public:
 	}
 //
 	TYP get(){ //zwraca wartosc ostatniego elementu
-		return tail->value;
+		if(size){
+			return tail->value;
+		}else{
+			cout<<"Trying to get from empty list, aborted\n";
+			return;
+		}
 	}
 //
 	TYP get(Node<TYP> *a){ //zwraca wartosc podanego elementu
-		return a->value;
+		if(a==nullptr){
+			cout<<"Trying to get nullptr, aborted\n";
+			return NULL;
+		}else{
+			return a->value;
+		}
 	}
 //
 	bool is_empty(){	//sprawdza czy jest pusty
