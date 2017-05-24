@@ -7,15 +7,16 @@
 using namespace std;
 #include <string>
 
-int main(){	
-	Map m(20);
-	string s;
-	for(int i=0;i<m.get_size();i++){
-		cout<<"podej suowo xD: ";
-		cin>>s;
-		m.insert(s);
-	}
-	m.show();
+int main(){
+	int size, mapSize, hashOption;
+	cout<<"podaj:\n rozmiar danych: ";
+	cin>>size;
+	cout<<"podaj rozmiar mapy\n(nie mniejsza niz rozmiar danych: ";
+	cin>>mapSize;
+	cout<<"podaj opcje hashowania (1 lub 2): ";
+	cin>>hashOption;
+	Map m(mapSize, hashOption);
+	measures(m, size);
 	return 0;
 	
 

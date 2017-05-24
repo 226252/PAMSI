@@ -67,7 +67,7 @@ public:
 			}
 			tmp=tmp->next;
 		}
-		cout <<"nie ma mnie tu wiec moj adres to ";
+		cout <<"nie ma mnie tu wiec moj adres to nullptr\n";
 		return nullptr;
 	}
 //
