@@ -9,15 +9,17 @@ struct TreeNode
 {
 	TreeNode<TYP> *left; 
 	TreeNode<TYP> *right;
-	TYP value;  //zawartosc ogniwa
+	TreeNode<TYP> *up;
+	TYP key;  
+	char color;
 public:
-	TreeNode(){        //konstruktor
+	TreeNode(){        
 		left=NULL;
 		right=NULL;
 	}
 // 
-	TYP get_value(){   //zwraca wartosc ogniwa
-		return value;
+	TYP get_key(){   
+		return key;
 	}
 //
 	TreeNode* get_right(){
@@ -27,6 +29,12 @@ public:
 	TreeNode* get_left(){
 		return left;
 	}
+//
+	char get_color(){
+		return color;
+	}
+//
+
 };
 
 #endif
